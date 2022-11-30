@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/namespace'
 require 'mongoid'
 
 Mongoid.load! "mongoid.config"
@@ -20,4 +21,15 @@ end
 
 get '/' do
     'Welcome to Booklist'
+end
+
+namespace '/api/v1' do
+
+    before do
+        content_type 'application/json'
+    end
+
+    get '/books' do
+        Book.all.to_json
+    end
 end
